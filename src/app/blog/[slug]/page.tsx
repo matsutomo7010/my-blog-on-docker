@@ -2,13 +2,6 @@ import { getPostData } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
-import { Metadata } from 'next';
-
-type PageProps = {
-    params: {
-        slug: string;
-    };
-};
 
 export async function generateStaticParams() {
     const postsDirectory = path.join(process.cwd(), '_posts');
@@ -18,14 +11,7 @@ export async function generateStaticParams() {
     }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const postData = await getPostData(params.slug);
-    return {
-        title: postData.title,
-    };
-}
-
-export default async function Post({ params }: PageProps) {
+export default async function Post({ params }: { params: { slug: string } }) {
     try {
         const postData = await getPostData(params.slug);
         return (
@@ -40,7 +26,7 @@ export default async function Post({ params }: PageProps) {
                 />
             </article>
         );
-    } catch {
+    } catch (err) {
         notFound();
     }
 }
