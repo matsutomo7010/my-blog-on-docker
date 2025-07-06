@@ -12,7 +12,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Post({ params }: { params: { slug: string } }) {
-    const { params } = props;
     try {
         const postData = await getPostData(params.slug);
         return (
