@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=development
