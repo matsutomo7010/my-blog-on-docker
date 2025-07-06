@@ -11,16 +11,19 @@ export async function generateStaticParams() {
     }));
 }
 
-// 👇 型アノテーションを完全に削除
-export default async function Post({ params }) {
+type Params = {
+    params: {
+        slug: string;
+    };
+};
+
+export default async function Post({ params }: Params) {
     try {
         const postData = await getPostData(params.slug);
         return (
             <article style={{ padding: '2rem' }}>
                 <h1 style={{ fontSize: '2rem' }}>{postData.title}</h1>
-                <div style={{ color: 'gray', marginBottom: '1.5rem' }}>
-                    {postData.date}
-                </div>
+                <div style={{ color: 'gray', marginBottom: '1.5rem' }}>{postData.date}</div>
                 <div
                     dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
                     style={{ lineHeight: '1.7' }}
