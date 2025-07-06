@@ -11,7 +11,8 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
+// 👇 型アノテーションを完全に削除
+export default async function Post({ params }) {
     try {
         const postData = await getPostData(params.slug);
         return (
@@ -26,7 +27,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
                 />
             </article>
         );
-    } catch (err) {
+    } catch {
         notFound();
     }
 }
