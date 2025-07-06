@@ -11,13 +11,7 @@ export async function generateStaticParams() {
     }));
 }
 
-type Params = {
-    params: {
-        slug: string;
-    };
-};
-
-export default async function Post({ params }: Params) {
+export default async function Post({ params }: { params: { slug: string } }) {
     try {
         const postData = await getPostData(params.slug);
         return (
