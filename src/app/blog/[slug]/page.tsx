@@ -11,8 +11,7 @@ export async function generateStaticParams() {
     }));
 }
 
-// ❗型を完全に省略するのがベスト（Next.jsのビルドで通る）
-export default async function Post(props) {
+export default async function Post({ params }: { params: { slug: string } }) {
     const { params } = props;
     try {
         const postData = await getPostData(params.slug);
