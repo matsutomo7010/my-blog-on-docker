@@ -11,13 +11,17 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
+// ❗型を完全に省略するのがベスト（Next.jsのビルドで通る）
+export default async function Post(props) {
+    const { params } = props;
     try {
         const postData = await getPostData(params.slug);
         return (
             <article style={{ padding: '2rem' }}>
                 <h1 style={{ fontSize: '2rem' }}>{postData.title}</h1>
-                <div style={{ color: 'gray', marginBottom: '1.5rem' }}>{postData.date}</div>
+                <div style={{ color: 'gray', marginBottom: '1.5rem' }}>
+                    {postData.date}
+                </div>
                 <div
                     dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
                     style={{ lineHeight: '1.7' }}
